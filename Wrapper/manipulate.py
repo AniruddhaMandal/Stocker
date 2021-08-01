@@ -31,7 +31,8 @@ def replace_null(dataset):
             non_null = dataset[i][1]
     return buffer 
 
-def data_cleaning_pipeline(data):
+def data_cleaning_pipeline(data_path):
+    data = get_data(data_path)
     out_data = get_avg_column(data)
     out_data = replace_null(out_data)
     return out_data

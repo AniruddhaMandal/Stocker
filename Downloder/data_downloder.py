@@ -11,7 +11,7 @@ def _single_stock_download_data(stock):
     url = get_url(stock)
     with request.urlopen(url) as response:
         data = response.read()    
-    with open(f'{config.OUT_DATA_DIR}/{stock}.csv', 'w') as f:
+    with open(f'{config.OUT_DATA_DIR}/RawData/{stock}.csv', 'w') as f:
         f.write(data.decode('utf-8'))
 
 def download_data(stocks):
