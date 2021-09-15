@@ -15,7 +15,7 @@ def home():
 @web_client.route('/update')
 def update_call():
     update.update_data()
-    return "Data Downloaded/Updated"
+    return render_template('/update.html')
 
 if __name__ == "__main__":
     web_client.run(debug=True)

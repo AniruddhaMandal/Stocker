@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/navbar.css')}}">    <link rel="stylesheet" href="{{url_for('static',filename='css/background.css')}}">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet"> 
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body {{bg}}>
+    <div class="topnav">
+        <a class="active" href="#home"> Home</a>
+        <a href="{{url_for('update_call')}}">Update</a>
+        <a href="#plot">Plot</a>
+        <a href="#add">New</a>
+        <div class='icon'>
+            <a class='stocker' href="#stocker">Stocker</a>
+        </div>
+    </div>
+    <h1 class="heading">{% block heading %}{% endblock %}</h1>
+    <p class="para">{% block content %}{% endblock %}</p>
+</body>
+</html>

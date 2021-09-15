@@ -1,0 +1,15 @@
+.bgim{
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.heading {
+    color: white;
+    text-align: center;
+    font-family: Lobster;
+    font-size: 90px;
+}
+.para {
+    color: white;
+    text-align: center;
+}

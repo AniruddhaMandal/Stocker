@@ -1,3 +1,12 @@
-<h1>Welcome To Stocker</h1>
-Data has not been downloaded. Please download/update the data: 
-<a href="{{url_for('update_call')}}">update</a>
+{% extends "base.html" %}
+{% block titile %}
+Update
+{% endblock titile %}
+
+{% block heading %}
+Update or Download Data
+{% endblock heading %}
+
+{% block content %}
+Your data has been successfully Updated/Download
+{% endblock content %}
