@@ -18,7 +18,7 @@ class Stock:
         self.id   = id
         self.source = url.substitute(stock_name=id)
         self.raw_data = f"{raw_out_dir}{self.name}.csv"        
-        self.clean_data = f"{clean_out_dir}{self.name}.csv"
+        self.clean_data_file = f"{clean_out_dir}{self.name}.csv"
 
     def download(self):
         with request.urlopen(self.source) as response:
@@ -34,12 +34,12 @@ class Stock:
             data = list(data)
             data = self._get_avg_column(data[1:])
             data = self._replace_null(data)
-        with open(self.clean_data, 'w', newline='') as f:
+        with open(self.clean_data_file, 'w', newline='') as f:
             write = csv.writer(f)
             write.writerows(data)
 
     def config(self):
-        data = list(csv.reader(open(self.clean_data,'r')))
+        data = list(csv.reader(open(self.clean_data_file,'r')))
         self.dates = np.array([row[0] for row in data], dtype=np.datetime64)
         self.value = np.array([row[1] for row in data], dtype=np.float64)
 

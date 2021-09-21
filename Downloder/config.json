@@ -1,0 +1,13 @@
+{
+    "stock_list":
+    [
+        {
+            "name": "itc",
+            "id"  : "ITC.NS"
+        },
+        {
+            "name": "tcs",
+            "id"  : "TCS.NS"
+        }
+    ]
+}

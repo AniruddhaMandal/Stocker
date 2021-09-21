@@ -7,4 +7,3 @@ def test_Stocker():
     tcs = stocks.Stock("TCS", "TCS.NS")
     tcs.clean()
     tcs.config()
-    assert itc.dates == tcs.dates

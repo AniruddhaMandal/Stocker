@@ -1,22 +1,19 @@
+from Stocker import config, stocks
+from Catalog import catalog
 import os
-from Downloder import data_downloder
-from Downloder import config
-from Wrapper import manipulate
-import csv
+import json
+
+_log = catalog.CataLog()
 
 def update_data():
-    try:
-        os.mkdir("Data")
-        os.mkdir("Data/RawData")
-        os.mkdir("Data/CleanData")
-
-    except:
-        print("Data directory already present in the current folder.")
-
-    data_downloder.download_data(config.LIST_OF_STOCKS)
-
-    for file in os.listdir(f'{config.OUT_DATA_DIR}/RawData'): 
-        out_data = manipulate.data_cleaning_pipeline(f'{config.OUT_DATA_DIR}/RawData/{file}')
-        with open(f'{config.OUT_DATA_DIR}/CleanData/{file}', 'w', newline='') as f:
-            write = csv.writer(f)
-            write.writerows(out_data)
+    os.makedirs(config.CLEAN_OUT_DIR,exist_ok=True)
+    os.makedirs(config.RAW_OUT_DIR,exist_ok=True)
+    with open("Downloder/config.json") as f:
+        stock_names = json.load(f)
+    for i in stock_names['stock_list']:
+        stock_object = stocks.Stock(name=i['name'], id=i['id'])
+        try:
+            stock_object.download()
+            stock_object.clean()
+        except:
+            _log.fail(f"Error occured for [{i['id']}].The id ({i['id']}) for the stock {i['name']} might be wrong. Please make sure the id is correct.")
