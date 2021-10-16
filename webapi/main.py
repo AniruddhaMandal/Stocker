@@ -25,8 +25,8 @@ def update_call():
 def plot():
     itc = stocks.Stock("my_itc","ITC.NS")
     itc.clean()
-    single_plot._plot(itc)
-    return "<h1>Graph plotted</h1>"
+    html = single_plot._plot(itc)
+    return html
 
 
 if __name__ == "__main__":
