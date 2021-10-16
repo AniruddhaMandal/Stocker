@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%set new_active="class=active"%}
+
+{% block title %}
+Add New
+{% endblock title %}
+
+{% block content %}
+<div style="color: black;">
+<h1> Fill Name and ID of the Stock </h1>
+<form action="add" method="POST">
+    <label for="stock_name">Stock Name</label>
+    <input type="text" name="stock_name" value="" required>
+    <label for="stock_id">Stock ID </label>
+    <input type="text" name="stock_id" value="" required>
+    <input type="submit" name="" id="" value="Add">
+</form>
+</div>
+{% endblock content %}

@@ -18,12 +18,12 @@
         <a {{home_active}} href="{{url_for('home')}}"> Home</a>
         <a {{update_active}} href="{{url_for('update_call')}}">Update</a>
         <a {{plot_active}}href="{{url_for('plot')}}">Plot</a>
-        <a {{new_active}} href="#add">New</a>
+        <a {{new_active}} href="{{url_for('add_client.add_stock_form')}}">New</a>
         <div class='icon'>
             <a class='stocker' href="{{url_for('home')}}">Stocker</a>
         </div>
     </div>
     <h1 class="heading">{% block heading %}{% endblock %}</h1>
-    <p class="para">{% block content %}{% endblock %}</p>
+    <div class="para">{% block content %}{% endblock %}</div>
 </body>
 </html>
