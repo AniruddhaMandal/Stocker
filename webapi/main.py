@@ -1,12 +1,18 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request,redirect
 import os
+from Catalog import catalog
+from flask.helpers import url_for
+
+
 from Downloader import update
-from plotapi import single_plot
-from Stocker import stocks
 from webapi.add_stock import add_client
+from webapi.plot_request import plot_client
+
+_log = catalog.CataLog()
 
 web_client = Flask(__name__)
 web_client.register_blueprint(add_client)
+web_client.register_blueprint(plot_client)
 
 @web_client.route("/")
 def home():
@@ -21,12 +27,14 @@ def update_call():
     update.update_data()
     return render_template('/update.html')
 
-@web_client.route("/plot")
-def plot():
-    itc = stocks.Stock("my_itc","ITC.NS")
-    itc.clean()
-    html = single_plot._plot(itc)
-    return html
+@web_client.route("/plot", methods=['GET', 'POST'])
+def plot_interface():
+    if request.method == 'GET':
+        return render_template('select_plot.html')
+    if request.method == 'POST':
+        plot_stock = request.form
+        print(plot_stock)
+        return redirect(url_for('plot_interface')+'/'+plot_stock['stock_name']+'/'+plot_stock['stock_id'])
 
 
 if __name__ == "__main__":

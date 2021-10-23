@@ -13,6 +13,5 @@ def add_stock_form():
             'name': new_stock['stock_name'],
             'id'  : new_stock['stock_id']
         }
-
         update.update_stock_json(new_stock)
         return render_template('add.html')

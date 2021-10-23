@@ -1,4 +1,4 @@
-from bokeh.plotting import figure, show
+from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import file_html
 from Stocker.stocks import Stock
