@@ -15,3 +15,22 @@ def add_stock_form():
         }
         update.update_stock_json(new_stock)
         return render_template('add.html')
+
+@add_client.route("/add_list", methods=['POST', 'GET'])
+def add_stock_list():
+    if request.method == 'GET':
+        return render_template('/add_list.html')
+    if request.method == 'POST':
+        stock_list = request.form
+        stock_list = stock_list['stock_list'].split(",")
+        print(stock_list)
+        
+        for stock_name in stock_list:
+            print(stock_name)
+            new_stock = {
+                'name': stock_name,
+                'id' : stock_name+".NS"
+            }
+            update.update_stock_json(new_stock)
+        
+        return render_template('add_list.html')

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{%set list_active="class=active"%}
+
+{% block title %}
+Add Stock List
+{% endblock title %}
+
+{% block content %}
+<div style="color: black;">
+<h1> Fill Names Of Stocks [Comma Separated] </h1>
+<form action="add_list" method="POST">
+    <label for="stock_list">Stock List</label>
+    <input type="text" name="stock_list" value="" required>
+    <input type="submit" name="" id="" value="Add">
+</form>
+</div>
+{% endblock content %}
