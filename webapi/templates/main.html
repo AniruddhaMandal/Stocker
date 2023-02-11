@@ -14,4 +14,8 @@ Welcome to Stocker
 
 {% block content %}
 Your Current Stock List: {{stock_list}}
-{% endblock content %}
+<br>
+<a href="{{url_for('merge_client.merge_database')}}">
+<button type="button" class="button">Merge Database</button>
+</a>
+{% endblock content%}

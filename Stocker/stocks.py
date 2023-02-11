@@ -34,6 +34,7 @@ class Stock:
             data = list(data)
             data = self._get_avg_column(data[1:])
             data = self._replace_null(data)
+            data.reverse()
         with open(self.clean_data_file, 'w', newline='') as f:
             write = csv.writer(f)
             write.writerows(data)

@@ -7,12 +7,14 @@ from flask.helpers import url_for
 from Downloader import update
 from webapi.add_stock import add_client
 from webapi.plot_request import plot_client
+from webapi.merge_api import merge_client
 
 _log = catalog.CataLog()
 
 web_client = Flask(__name__)
 web_client.register_blueprint(add_client)
 web_client.register_blueprint(plot_client)
+web_client.register_blueprint(merge_client)
 
 @web_client.route("/")
 def home():
