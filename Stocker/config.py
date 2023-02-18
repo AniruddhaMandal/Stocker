@@ -3,3 +3,4 @@ URL = "https://query1.finance.yahoo.com/v7/finance/download/$stock_name?period1=
 RAW_OUT_DIR = 'Data/RawData/'
 CLEAN_OUT_DIR = 'Data/CleanData/'
 MOVING_AVG_DIR = 'Data/MovingAvg/'
+SAVED_STOCK_NAMES_JSON_FILE = "Data/config.json"

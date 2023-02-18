@@ -13,17 +13,22 @@ Data Operations
 {% endblock heading%}
 
 {% block content %}
-  <div class="dropdown">
-    <form action="{{url_for('operations_interface')}}" method="post">
-        <button type="menu" class="dropbtn">Database</button>
-        <div class="dropdown-content">
+  <form action="{{url_for('operations_interface')}}" method="post" class="form">
+
+    <div class="dropdown">
+      <button type="reset" class="dropbtn">Stock List</button>
+      <div class="dropdown-content">
         {% for stock in stock_list%}
         <a><input type="checkbox" name="{{stock}}">{{ stock }}</a>
         {% endfor %}
-        </div>
+      </div>
+    </div>
+
+    <div>
         <input type="submit" name="merge_stock_list" value="Merge" class="button"> 
-    </form>
-  </div>
+        <input type="submit" name="download_stock_list" value="Download" class="button">
+    </div>
+  </form>
 
   <div class="message-box">
     {% for ms in message %}
