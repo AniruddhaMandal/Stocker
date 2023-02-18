@@ -22,7 +22,7 @@ def merge_stock_object_list(stock_names_list):
    dataframe_list = []
    for name in stock_names_list:
       try:
-         df = pandas.read_csv(config.CLEAN_OUT_DIR+name+".csv")
+         df = pandas.read_csv(config.MOVING_AVG_DIR+name+".csv")
          df.columns = ["Date", name]
          dataframe_list.append(df)
       except:
