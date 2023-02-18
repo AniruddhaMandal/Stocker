@@ -22,11 +22,9 @@ def add_stock_list():
         return render_template('/add_list.html')
     if request.method == 'POST':
         stock_list = request.form
-        stock_list = stock_list['stock_list'].split(",")
-        print(stock_list)
-        
+        stock_list = stock_list['stock_list'].replace(" ",'').split(",")
+            
         for stock_name in stock_list:
-            print(stock_name)
             new_stock = {
                 'name': stock_name,
                 'id' : stock_name+".NS"

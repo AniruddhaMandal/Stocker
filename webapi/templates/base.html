@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/navbar.css')}}">    <link rel="stylesheet" href="{{url_for('static',filename='css/background.css')}}">    
+    <link rel="stylesheet" href="{{url_for('static',filename='css/navbar.css')}}">    
+    <link rel="stylesheet" href="{{url_for('static',filename='css/background.css')}}">    
     <link rel="stylesheet" href="{{url_for('static',filename='css/button.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,7 @@
     <div class="topnav">
         <a {{home_active}} href="{{url_for('home')}}"> Home</a>
         <a {{update_active}} href="{{url_for('update_call')}}">Update</a>
+        <a {{operations_active}} href="{{url_for('operations_interface')}}"> Operations</a>
         <a {{plot_active}} href="{{url_for('plot_interface')}}">Plot</a>
         <a {{new_active}} href="{{url_for('add_client.add_stock_form')}}">New</a>
         <a {{list_active}} href="{{url_for('add_client.add_stock_list')}}"> Add Stock List</a>

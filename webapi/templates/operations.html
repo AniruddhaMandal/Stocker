@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% set bg="class=bgim background=static/images/background.png"%}
+
+{% set operations_active="class=active"%}
+
+{% block title%}
+Operations
+{% endblock title%}
+
+{% block heading %}
+Data Operations 
+{% endblock heading%}
+
+{% block content %}
+  <div class="dropdown">
+    <form action="{{url_for('operations_interface')}}" method="post">
+        <button type="menu" class="dropbtn">Database</button>
+        <div class="dropdown-content">
+        {% for stock in stock_list%}
+        <a><input type="checkbox" name="{{stock}}">{{ stock }}</a>
+        {% endfor %}
+        </div>
+        <input type="submit" name="merge_stock_list" value="Merge" class="button"> 
+    </form>
+  </div>
+
+  <div class="message-box">
+    {% for ms in message %}
+    <h4>{{ ms }}</h4>
+    {% endfor %}
+  </div>
+{% endblock content %}

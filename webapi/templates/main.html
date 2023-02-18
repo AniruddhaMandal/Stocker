@@ -13,9 +13,26 @@ Welcome to Stocker
 {% endblock heading %}
 
 {% block content %}
-Your Current Stock List: {{stock_list}}
-<br>
-<a href="{{url_for('merge_client.merge_database')}}">
-<button type="button" class="button">Merge Database</button>
-</a>
+  <div class="dropdown">
+    <button class="dropbtn">Database</button>
+    <div class="dropdown-content">
+      {% for stock in stock_list%}
+      <a>{{ stock }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <a href="{{url_for('merge_client.merge_database')}}">
+  <button type="button" class="button">Merge</button>
+  </a>
+
+
+  <div>
+    <br>
+    <form action="{{url_for('avg_client.moving_avg_all_api')}}" method="post">
+      <input type="text" value="" placeholder="Period (Days)" name="days" class="input-form" required> <br>
+      <input type="submit" value="Moving Average" class="button button-submit">
+    </form>
+  </div>
+
 {% endblock content%}

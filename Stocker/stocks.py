@@ -1,16 +1,26 @@
-import numpy as np
-import csv
-from Stocker import config 
-from string import Template
-from urllib import request
-url = Template(config.URL)
 import os
+import csv
+from urllib import request
+from string import Template
+
+import numpy as np
+
+from Stocker import config 
+from Catalog import catalog
+
+url = Template(config.URL)
+_log = catalog.CataLog()
 
 class Stock:
+    """
+        Stock Object: Encapsulates individual stocks, it's data folders
+        and operations corresponding to each `Stock` object.
+    
+    """
     def __init__(
         self, 
-        name,
-        id, 
+        name: str,
+        id: str, 
         raw_out_dir=config.RAW_OUT_DIR, 
         clean_out_dir=config.CLEAN_OUT_DIR):
         
@@ -44,9 +54,24 @@ class Stock:
         self.dates = np.array([row[0] for row in data], dtype=np.datetime64)
         self.value = np.array([row[1] for row in data], dtype=np.float64)
 
-    def moving_avg(self, days):
-        pass
-    
+    def moving_avg(self, period: int):
+        with open(self.clean_data_file) as clean_data_buffer:
+            clean_data_csv = csv.reader(clean_data_buffer)
+            clean_data = list(clean_data_csv)
+            dates = [i[0] for i in clean_data]
+            prices = np.array([i[1] for i in clean_data],dtype=np.float64)
+
+        os.makedirs(config.MOVING_AVG_DIR,exist_ok=True)
+        with open(config.MOVING_AVG_DIR+self.name+".csv",'w') as moving_avg_file_buffer:
+            current_avg = prices[:period].sum()/period
+            moving_avg_file_buffer.write(f"Date, {period} Day Moving Average\n")
+            for i in range(len(dates)):
+                moving_avg_file_buffer.write(f"{dates[i]},{current_avg}\n")
+                try:
+                    current_avg = current_avg + (prices[i+period]-prices[i])/period
+                except:
+                    break
+
     #---Following methods are not for users------
 
     def _day_avg(self,row):

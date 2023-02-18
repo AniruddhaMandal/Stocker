@@ -13,3 +13,41 @@
     color: white;
     text-align: center;
 }
+
+/* Animate Message: Hide Message Box */
+.message-box {
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+        padding: 0px;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}
+
+.message-box {
+    font-family:"JetBrains Mono", monospace;
+    background: cornsilk;
+    width: 15%;
+    margin: auto;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    margin-top: 10px;
+}
