@@ -2,6 +2,9 @@ from flask import request, Blueprint, render_template, redirect,url_for
 
 from Stocker import stocks
 from Operations import moving_avg
+from Catalog import catalog
+
+logger = catalog.CataLog()
 
 avg_client = Blueprint("avg_client", __name__,template_folder="templates")
 
@@ -18,3 +21,13 @@ def moving_avg_all_api():
         moving_avg.moving_avg_all(int(period))
         return redirect(url_for("home"))
         
+@avg_client.route("/moving_avg_url", methods=["POST"])
+def moving_avg_stock_obj_list():
+    requested_stock_names = request.json["stock_name"]
+    period = int(request.json["text_input"])
+    message = ""
+    for name in requested_stock_names:
+        obj = stocks.Stock(name, name+".NS")
+        message += obj.moving_avg(period)
+    
+    return message+"Moving Average Data Preparation complete !"

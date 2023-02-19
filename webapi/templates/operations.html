@@ -1,3 +1,8 @@
+{% block javascript %}
+  <script type="text/javascript" src="{{url_for('static',filename='js/selectAll.js')}}">
+  </script>
+{% endblock %}
+
 {% extends "base.html" %}
 
 {% set bg="class=bgim background=static/images/background.png"%}
@@ -18,15 +23,31 @@ Data Operations
     <div class="dropdown">
       <button type="reset" class="dropbtn">Stock List</button>
       <div class="dropdown-content">
+        <a><input type="checkbox" id="select_all_checkbox">Select All</a>
         {% for stock in stock_list%}
-        <a><input type="checkbox" name="{{stock}}">{{ stock }}</a>
+        <a><input type="checkbox" name="stock_name.{{stock}}" class="stock_checkbox">{{ stock }}</a>
         {% endfor %}
       </div>
     </div>
 
     <div>
-        <input type="submit" name="merge_stock_list" value="Merge" class="button"> 
-        <input type="submit" name="download_stock_list" value="Download" class="button">
+        <br>
+        <label for="Download" class="label-tag">1.Download Data </label> <br>
+        <input type="submit" name="operation.download_stock_list" value="Download" class="button">
+
+        <div>
+          <br>
+          <label for="input-form" class="label-tag">2.Create Data with Moving Average Values</label> <br>
+          
+          <input type="text" value="" placeholder="Period (Days)" name="text_input.period" class="input-form"> <br>
+          <input type="submit" name="operation.moving_avg_url" value="Moving Average" class="button button-submit">
+        
+        </div>
+
+        <br>
+        <label for="Merge" class="label-tag">3.Merge Moving Average Data.</label><br>
+        <input type="submit" name="operation.merge_stock_list" value="Merge" class="button"> 
+
     </div>
   </form>
 

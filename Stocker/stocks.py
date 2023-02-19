@@ -55,22 +55,26 @@ class Stock:
         self.value = np.array([row[1] for row in data], dtype=np.float64)
 
     def moving_avg(self, period: int):
-        with open(self.clean_data_file) as clean_data_buffer:
-            clean_data_csv = csv.reader(clean_data_buffer)
-            clean_data = list(clean_data_csv)
-            dates = [i[0] for i in clean_data]
-            prices = np.array([i[1] for i in clean_data],dtype=np.float64)
+        try:
+            with open(self.clean_data_file) as clean_data_buffer:
+                clean_data_csv = csv.reader(clean_data_buffer)
+                clean_data = list(clean_data_csv)
+                dates = [i[0] for i in clean_data]
+                prices = np.array([i[1] for i in clean_data],dtype=np.float64)
 
-        os.makedirs(config.MOVING_AVG_DIR,exist_ok=True)
-        with open(config.MOVING_AVG_DIR+self.name+".csv",'w') as moving_avg_file_buffer:
-            current_avg = prices[:period].sum()/period
-            moving_avg_file_buffer.write(f"Date, {period} Day Moving Average\n")
-            for i in range(len(dates)):
-                moving_avg_file_buffer.write(f"{dates[i]},{current_avg}\n")
-                try:
-                    current_avg = current_avg + (prices[i+period]-prices[i])/period
-                except:
-                    break
+            os.makedirs(config.MOVING_AVG_DIR,exist_ok=True)
+            with open(config.MOVING_AVG_DIR+self.name+".csv",'w') as moving_avg_file_buffer:
+                current_avg = prices[:period].sum()/period
+                moving_avg_file_buffer.write(f"Date, {period} Day Moving Average\n")
+                for i in range(len(dates)):
+                    moving_avg_file_buffer.write(f"{dates[i]},{current_avg}\n")
+                    try:
+                        current_avg = current_avg + (prices[i+period]-prices[i])/period
+                    except:
+                        break
+            return ""
+        except:
+            return f"Data not present for {self.name} !\n"
 
     #---Following methods are not for users------
 

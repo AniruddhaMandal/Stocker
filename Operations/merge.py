@@ -26,7 +26,7 @@ def merge_stock_object_list(stock_names_list):
          df.columns = ["Date", name]
          dataframe_list.append(df)
       except:
-         message += f"Data for {name} is missing !\n"
+         message += f"Moving Average Data for {name} is missing !\n"
 
    if len(dataframe_list) == 0:
       return message+"Failed to Merge"

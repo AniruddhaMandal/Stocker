@@ -14,6 +14,6 @@ def merge_database():
 
 @merge_client.route("/merge_stock_list", methods=["POST"])
 def merge_stock_objects():
-    requested_stock_names = list(request.json.keys())[:-1]
+    requested_stock_names = request.json["stock_name"] 
     message = merge.merge_stock_object_list(requested_stock_names)
     return message
