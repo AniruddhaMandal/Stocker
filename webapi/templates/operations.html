@@ -23,9 +23,9 @@ Data Operations
     <div class="dropdown">
       <button type="reset" class="dropbtn">Stock List</button>
       <div class="dropdown-content">
-        <a><input type="checkbox" id="select_all_checkbox">Select All</a>
+        <a><input type="checkbox" id="select_all_checkbox" checked="checked">Select All</a>
         {% for stock in stock_list%}
-        <a><input type="checkbox" name="stock_name.{{stock}}" class="stock_checkbox">{{ stock }}</a>
+        <a><input type="checkbox" name="stock_name" class="stock_checkbox" value="{{stock}}" checked="checked">{{ stock }}</a>
         {% endfor %}
       </div>
     </div>
@@ -33,14 +33,17 @@ Data Operations
     <div>
         <br>
         <label for="Download" class="label-tag">1.Download Data </label> <br>
-        <input type="submit" name="operation.download_stock_list" value="Download" class="button">
+        <input type="submit" name="operation" value="download_stock_list" class="button">
 
         <div>
           <br>
           <label for="input-form" class="label-tag">2.Create Data with Moving Average Values</label> <br>
           
-          <input type="text" value="" placeholder="Period (Days)" name="text_input.period" class="input-form"> <br>
-          <input type="submit" name="operation.moving_avg_url" value="Moving Average" class="button button-submit">
+          <input type="text" placeholder="Period (Days)" name="text_input" value="" class="input-form"> <br>
+          <input type="submit" name="operation" value="moving_avg_url" class="button button-submit">
+          <br>
+          <input type="radio" name="moving_avg_type" value="sma" checked="checked"> SMA  
+          <input type="radio" name="moving_avg_type" value="ema"> EMA
         
         </div>
 

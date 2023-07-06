@@ -65,22 +65,21 @@ def operations_interface():
         return render_template("operations.html",stock_list=stock_names_list)
     
     if request.method == "POST":
-        responses = list(request.form.keys())
         responses_dictionary = {
             "stock_name": [],
             "operation": None,
+            "moving_avg_type": None,
             "text_input": None
         }
 
-        for response in responses:
-            element = response.split('.')
-            if element[0] == "stock_name":
-                responses_dictionary["stock_name"].append(element[1])
-            else:
-                responses_dictionary[element[0]] = element[1]
-            
-            responses_dictionary["text_input"] = request.form["text_input.period"]
-        
+        r = request.form
+        for key in r.keys():
+            for value in r.getlist(key):
+                if key == "stock_name":
+                    responses_dictionary[key].append(value)
+                else:
+                    responses_dictionary[key] = value
+
         message = requests.post(f"http://127.0.0.1:5000/{responses_dictionary['operation']}",json=responses_dictionary).text
         message = message.split("\n")
         return render_template("operations.html",stock_list=stock_names_list,message=message)

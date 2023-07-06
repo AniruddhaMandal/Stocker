@@ -25,9 +25,10 @@ def moving_avg_all_api():
 def moving_avg_stock_obj_list():
     requested_stock_names = request.json["stock_name"]
     period = int(request.json["text_input"])
+    moving_avg_type = request.json["moving_avg_type"]
     message = ""
     for name in requested_stock_names:
         obj = stocks.Stock(name, name+".NS")
-        message += obj.moving_avg(period)
+        message += obj.moving_avg(period,avg_type=moving_avg_type)
     
     return message+"Moving Average Data Preparation complete !"

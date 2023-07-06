@@ -54,7 +54,7 @@ class Stock:
         self.dates = np.array([row[0] for row in data], dtype=np.datetime64)
         self.value = np.array([row[1] for row in data], dtype=np.float64)
 
-    def moving_avg(self, period: int):
+    def moving_avg(self, period: int, avg_type: str = "sma"):
         try:
             with open(self.clean_data_file) as clean_data_buffer:
                 clean_data_csv = csv.reader(clean_data_buffer)
@@ -63,17 +63,34 @@ class Stock:
                 prices = np.array([i[1] for i in clean_data],dtype=np.float64)
 
             os.makedirs(config.MOVING_AVG_DIR,exist_ok=True)
-            with open(config.MOVING_AVG_DIR+self.name+".csv",'w') as moving_avg_file_buffer:
-                current_avg = prices[:period].sum()/period
-                moving_avg_file_buffer.write(f"Date, {period} Day Moving Average\n")
-                for i in range(len(dates)):
-                    moving_avg_file_buffer.write(f"{dates[i]},{current_avg}\n")
-                    try:
-                        current_avg = current_avg + (prices[i+period]-prices[i])/period
-                    except:
-                        break
+
+            # operation for simple moving average
+            if( avg_type == "sma"):
+                with open(config.MOVING_AVG_DIR+self.name+".csv",'w') as moving_avg_file_buffer:
+                    current_avg = prices[:period].sum()/period
+                    moving_avg_file_buffer.write(f"Date, {period} Day Moving Average\n")
+                    for i in range(len(dates[period:])):
+                        moving_avg_file_buffer.write(f"{dates[i+period]},{current_avg}\n")
+                        try:
+                            current_avg = current_avg + (prices[i+period]-prices[i])/period
+                        except:
+                            break
+
+            if(avg_type == "ema"):
+                smoothing_factor = 2/(period+1)
+                with open(config.MOVING_AVG_DIR+self.name+".csv","w") as moving_avg_file_buffer:
+                    current_ema = prices[:period].sum()/period
+                    moving_avg_file_buffer.write(f"Date, {period} Day Exp. Moving Average\n")
+                    for i in range(len(dates[period:])):
+                        moving_avg_file_buffer.write(f"{dates[i+period]},{current_ema}\n")
+                        try:
+                            current_ema = smoothing_factor*prices[i+period] + (1-smoothing_factor)*current_ema
+                        except:
+                            break
             return ""
-        except:
+
+        except Exception as e:
+            print(e)
             return f"Data not present for {self.name} !\n"
 
     #---Following methods are not for users------
