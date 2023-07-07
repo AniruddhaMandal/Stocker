@@ -15,6 +15,7 @@ from webapi.plot_request import plot_client
 from webapi.merge_api import merge_client
 from webapi.avg_api import avg_client
 from webapi.download_api import download_client
+from webapi.simulation_api import simulation_interface
 
 _log = catalog.CataLog()
 
@@ -24,6 +25,7 @@ web_client.register_blueprint(plot_client)
 web_client.register_blueprint(merge_client)
 web_client.register_blueprint(avg_client)
 web_client.register_blueprint(download_client)
+web_client.register_blueprint(simulation_interface)
 
 @web_client.route("/")
 def home():
@@ -65,6 +67,13 @@ def operations_interface():
         return render_template("operations.html",stock_list=stock_names_list)
     
     if request.method == "POST":
+        
+        operation_dict = {
+            "Download" : "download_stock_list",
+            "Moving Average" : "moving_avg_url",
+            "Merge" : "merge_stock_list"
+        }
+        
         responses_dictionary = {
             "stock_name": [],
             "operation": None,
@@ -77,8 +86,11 @@ def operations_interface():
             for value in r.getlist(key):
                 if key == "stock_name":
                     responses_dictionary[key].append(value)
+                elif key == "operation":
+                    responses_dictionary[key] = operation_dict[value]
                 else:
                     responses_dictionary[key] = value
+
 
         message = requests.post(f"http://127.0.0.1:5000/{responses_dictionary['operation']}",json=responses_dictionary).text
         message = message.split("\n")
