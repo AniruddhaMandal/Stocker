@@ -54,15 +54,13 @@ class Stock:
         self.dates = np.array([row[0] for row in data], dtype=np.datetime64)
         self.value = np.array([row[1] for row in data], dtype=np.float64)
 
-    def moving_avg(self, period: int, avg_type: str = "sma"):
+    def moving_avg(self, period: int = 1, avg_type: str = "sma"):
         try:
             with open(self.clean_data_file) as clean_data_buffer:
                 clean_data_csv = csv.reader(clean_data_buffer)
                 clean_data = list(clean_data_csv)
                 dates = [i[0] for i in clean_data]
-                dates.reverse()
                 prices = np.array([i[1] for i in clean_data],dtype=np.float64)
-                prices = np.flip(prices)
 
             os.makedirs(config.MOVING_AVG_DIR,exist_ok=True)
 
@@ -72,23 +70,20 @@ class Stock:
                     current_avg = prices[:period].sum()/period
                     moving_avg_file_buffer.write(f"Date, {period} Day Moving Average\n")
                     for i in range(len(dates[period:])):
-                        moving_avg_file_buffer.write(f"{dates[i+period]},{current_avg}\n")
+                        moving_avg_file_buffer.write(f"{dates[i]},{current_avg}\n")
                         try:
                             current_avg = current_avg + (prices[i+period]-prices[i])/period
                         except:
                             break
 
             if(avg_type == "ema"):
-                smoothing_factor = 2/(period+1)
                 with open(config.MOVING_AVG_DIR+self.name+".csv","w") as moving_avg_file_buffer:
-                    current_ema = prices[:period].sum()/period
+                    ema_array = self._exp_moving_avg(np.flip(prices),period)
+                    ema_array = np.flip(ema_array)
                     moving_avg_file_buffer.write(f"Date, {period} Day Exp. Moving Average\n")
-                    for i in range(len(dates[period:])):
-                        moving_avg_file_buffer.write(f"{dates[i+period]},{current_ema}\n")
-                        try:
-                            current_ema = smoothing_factor*prices[i+period] + (1-smoothing_factor)*current_ema
-                        except:
-                            break
+                    for i in range(len(dates[period:])+1):
+                        moving_avg_file_buffer.write(f"{dates[i]},{ema_array[i]}\n")
+
             return ""
 
         except Exception as e:
@@ -119,3 +114,14 @@ class Stock:
     def _get_avg_column(self,dataset):
         out_data = [[row[0], self._day_avg(row)] for row in dataset]
         return out_data
+    
+    def _exp_moving_avg(self, array: np.array, period: int):
+        smoothing_factor = 2/(period+1)
+        ema_array = np.zeros(len(array)-period+1,dtype=np.float64)
+        current_ema = array[:period].sum()/period
+        ema_array[0] = current_ema
+        for i in range(len(array)-period):
+            current_ema = current_ema*(1 - smoothing_factor)+array[i+period]*smoothing_factor
+            ema_array[i+1] = current_ema
+        
+        return ema_array
