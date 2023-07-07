@@ -60,7 +60,9 @@ class Stock:
                 clean_data_csv = csv.reader(clean_data_buffer)
                 clean_data = list(clean_data_csv)
                 dates = [i[0] for i in clean_data]
+                dates.reverse()
                 prices = np.array([i[1] for i in clean_data],dtype=np.float64)
+                prices = np.flip(prices)
 
             os.makedirs(config.MOVING_AVG_DIR,exist_ok=True)
 
