@@ -1,4 +1,3 @@
-from lib2to3.pgen2.token import COLONEQUAL
 import os
 import sys
 import csv
@@ -63,7 +62,6 @@ class Stock:
                 with start. Otherwise `ranged` would be provided.
 
         """
-        
         #max range returns data with 1 month granularity. So using periods insted. 
         if (range == "max"):
             range = None
@@ -134,34 +132,40 @@ class Stock:
         if f'{self.name}.csv' not in os.listdir(config.RAW_OUT_DIR):
             if(self.download() == -1):
                 return -1
-        with open(self.raw_data, 'r') as f:
-            # removing the column names first.
-            column_names = f.readline()
-            data = csv.reader(f)
-            data = list(data)
-            data.reverse()
-            if output_type == "avg":
-                # column might contail missing data as `''`(empty string)
-                column = self._get_avg_column(data[1:])
-            if output_type == 'high':
-                column = [row[1] for row in data]
-            if output_type == 'low':
-                column = [row[2] for row in data]
-            if output_type == 'open':
-                column = [row[3] for row in data]
-            if output_type == 'close':
-                column = [row[4] for row in data]
-            if output_type == "volume":
-                column = [row[5] for row in data]
-            if output_type == 'adj_close':
-                column = [row[6] for row in data]
-            dates = [row[0] for row in data]
-
-        self._replace_null(column)
-        with open(self.clean_data_file, 'w', newline='') as f:
-            f.write(f"Date Time, {output_type.capitalize()}\n")
-            for d,c in zip(dates,column):
-                f.write(f"{d},{c}\n")
+        try:
+            with open(self.raw_data, 'r') as f:
+                # removing the column names first.
+                column_names = f.readline()
+                data = csv.reader(f)
+                data = list(data)
+                data.reverse()
+                data = self._replace_null_dataset(data)
+                if output_type == "avg":
+                    # column might contail missing data as `''`(empty string)
+                    column = self._get_avg_column(data[1:])
+                if output_type == 'high':
+                    column = [row[1] for row in data]
+                if output_type == 'low':
+                    column = [row[2] for row in data]
+                if output_type == 'open':
+                    column = [row[3] for row in data]
+                if output_type == 'close':
+                    column = [row[4] for row in data]
+                if output_type == "volume":
+                    column = [row[5] for row in data]
+                if output_type == 'adj_close':
+                    column = [row[6] for row in data]
+                dates = [row[0] for row in data]
+            with open(self.clean_data_file, 'w', newline='') as f:
+                f.write(f"Date Time, {output_type.capitalize()}\n")
+                for d,c in zip(dates,column):
+                    f.write(f"{d},{c}\n")
+            
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            _log.fail(f"{fname} line:{exc_tb.tb_lineno} {exc_type}:{exc_obj}")
+            raise Exception
 
     def config(self):
         try:
@@ -238,17 +242,41 @@ class Stock:
         """
         non_null = 0
         buffer = dataset 
-        for i in range(len(dataset)):
-            if 'None' in dataset[i]:
-                buffer[i] = non_null
-            else:
-                non_null = dataset[i]
-        return buffer 
+        try:
+            for i in range(len(dataset)):
+                if 'None' == dataset[i]:
+                    print(f"None Present{i}\n")
+                    buffer[i] = non_null
+                else:
+                    non_null = dataset[i]
+            return buffer 
 
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            _log.fail(f"{fname} line:{exc_tb.tb_lineno} {exc_type}:{exc_obj}")
+            raise Exception
+
+    def _replace_null_dataset(self,dataset):
+        try:
+            column_count = len(dataset[0])
+            for i in range(column_count-1):
+                buffer = self._replace_null([row[i+1] for row in dataset])
+                for j in range(len(buffer)):
+                    dataset[j][i+1] = buffer[j]
+            return dataset
+        
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            _log.fail(f"{fname} line:{exc_tb.tb_lineno} {exc_type}:{exc_obj}")
+            raise Exception
+
+        
     def _get_avg_column(self,dataset):
         out_data = [self._day_avg(row) for row in dataset]
         return out_data
-    
+
     def _exp_moving_avg(self, array: np.array, period: int):
         smoothing_factor = 2/(period+1)
         ema_array = np.zeros(len(array)-period+1,dtype=np.float64)

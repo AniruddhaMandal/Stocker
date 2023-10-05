@@ -79,9 +79,9 @@ def operations_interface():
             "operation": None,
             "moving_avg_type": None,
             "text_input": None,
-            "output_type": None,
-            "interval": None,
-            "range": None
+            "output_type": "avg",
+            "interval": "1d",
+            "range": "1y" 
         }
 
         r = request.form
