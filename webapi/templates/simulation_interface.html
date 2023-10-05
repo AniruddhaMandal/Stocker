@@ -10,10 +10,9 @@ Simulation Exchange
 
 
 {% block content %}
-<form action="{{url_for('simulation_interface.simul_cal_interface')}}" method="post" class="form">
-<div class="float-container">
-    <div class="float-child">hello</div>
-    <div class="float-child">world!</div>
-</div>
+<form action="{{url_for('simulation_interface.simul_cal_interface')}}" method="post" class="form" enctype="multipart/form-data">
+    <input type=file name=file>
+    <input type=submit value=upload>
 </form>
+<h3>{{message}}</h3>
 {% endblock content%}

@@ -50,14 +50,22 @@
 
   /* Style The Dropdown Button */
   .dropbtn {
-    background-color: #7e0173;
-    background-image: radial-gradient(100% 100% at 100% 0, #aa009c 0, #e044d3 100%);
+    background-color: rgb(71, 117, 71) !important;
     color: white;
-    padding: 16px;
-    font-size: 16px;
     font-family: "JetBrains Mono",monospace;
     border: none;
     cursor: pointer;
+  }
+  
+  .dropdown-big {
+    background-image: radial-gradient(100% 100% at 100% 0, #aa009c 0, #e044d3 100%);
+    background-color: #7e0173;
+    font-size:16px ;
+    padding: 16px
+  }
+  .small-dropdown {
+    font-size: small;
+    padding: 5px 5px;
   }
   
   /* The container <div> - needed to position the dropdown content */
@@ -97,9 +105,9 @@
   }
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {
+  /* .dropdown:hover .dropbtn {
     background-color: #b905aa;
-  }
+  } */
 
   .input-form {
     text-align: left;

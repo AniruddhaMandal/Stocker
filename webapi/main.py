@@ -78,7 +78,10 @@ def operations_interface():
             "stock_name": [],
             "operation": None,
             "moving_avg_type": None,
-            "text_input": None
+            "text_input": None,
+            "output_type": None,
+            "interval": None,
+            "range": None
         }
 
         r = request.form

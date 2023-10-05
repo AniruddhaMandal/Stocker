@@ -21,7 +21,7 @@ Data Operations
   <form action="{{url_for('operations_interface')}}" method="post" class="form">
 
     <div class="dropdown">
-      <button type="reset" class="dropbtn">Stock List</button>
+      <button type="reset" class="dropbtn dropdown-big">Stock List</button>
       <div class="dropdown-content">
         <a><input type="checkbox" id="select_all_checkbox" checked="checked">Select All</a>
         {% for stock in stock_list%}
@@ -34,6 +34,58 @@ Data Operations
         <br>
         <label for="Download" class="label-tag">1.Download Data </label> <br>
         <input type="submit" name="operation" value="Download" class="button">
+
+        <br>
+        <div class="dropdown small-dropdown">
+            <button class="dropbtn">Range</button>
+            <div class="dropdown-content">
+              <a> <input name="range" type="radio" value="1d">  1 Day</a>
+              <a> <input name="range" type="radio" value="5d">  5 Day</a>
+              <a> <input name="range" type="radio" value="1mo"> 1 Month</a>
+              <a> <input name="range" type="radio" value="3mo"> 3 Months</a>
+              <a> <input name="range" type="radio" value="6mo"> 6 Months</a>
+              <a> <input name="range" type="radio" value="1y">  1 Year</a>
+              <a> <input name="range" type="radio" value="2y">  2 Years</a>
+              <a> <input name="range" type="radio" value="5y">  5 Years</a>
+              <a> <input name="range" type="radio" value="10y"> 10 Years</a>
+              <a> <input name="range" type="radio" value="max"> Maximum</a>
+              <a> <input name="range" type="radio" value="ytd"> YTD</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Interval</button>
+            <div class="dropdown-content">
+              <a> <input name="interval" type="radio" value="1m">  1 min</a>
+              <a> <input name="interval" type="radio" value="2m">  2 min</a>
+              <a> <input name="interval" type="radio" value="5m"> 5 min</a>
+              <a> <input name="interval" type="radio" value="15m"> 15 min</a>
+              <a> <input name="interval" type="radio" value="30m"> 30 min</a>
+              <a> <input name="interval" type="radio" value="60m">  60 min</a>
+              <a> <input name="interval" type="radio" value="90m">  90 min</a>
+              <a> <input name="interval" type="radio" value="1h">  1 hr</a>
+              <a> <input name="interval" type="radio" value="1d"> 1 day</a>
+              <a> <input name="interval" type="radio" value="5d"> 5 day</a>
+              <a> <input name="interval" type="radio" value="1wk"> 1 week</a>
+              <a> <input name="interval" type="radio" value="1mo"> 1 month</a>
+              <a> <input name="interval" type="radio" value="3mo"> 3 month</a>
+
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">Column</button>
+            <div class="dropdown-content">
+              <a> <input name="output_type" type="radio" value="high">High</a>
+              <a> <input name="output_type" type="radio" value="low">Low</a>
+              <a> <input name="output_type" type="radio" value="close">Close</a>
+              <a> <input name="output_type" type="radio" value="open">Open</a>
+              <a> <input name="output_type" type="radio" value="avg">Average</a>
+              <a> <input name="output_type" type="radio" value="adj_close">Adjusted Close</a>
+              <a> <input name="output_type" type="radio" value="volume">Volume</a>
+
+            </div>
+        </div>
 
         <div>
           <br>

@@ -1,9 +1,11 @@
 import os
 import pandas
+from Catalog import catalog
 
 from Stocker import config
 from Stocker import stocks
 
+logger = catalog.CataLog()
 
 def merge_stockes():
    stock_files_list = os.listdir(config.CLEAN_OUT_DIR)
@@ -26,6 +28,7 @@ def merge_stock_object_list(stock_names_list):
          df.columns = ["Date", name]
          dataframe_list.append(df)
       except:
+         logger.fail(f"Moving Average Data for {name} is missing !")
          message += f"Moving Average Data for {name} is missing !\n"
 
    if len(dataframe_list) == 0:
