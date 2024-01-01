@@ -1,14 +1,14 @@
 # Stocker
-----------
-This is Python-flask based web application. Stocker collects and processes the data for you.
-It plots the graph and of stock and help to compare visually. Stocker is completly cross platform,
+
+This is a Python-flask-based web application. Stocker collects and processes the data for you.
+It plots the graph and of stock and helps to compare visually. Stocker is completely cross-platform,
 so use it on any OS of your choice.
 
 ## Installation
 ----------
-Currently no specific installation support is provided. In the future it would be distributed 
-through PyPI. To use it download the repo and install the `requirements.txt`. For this you need
-to have a python environment set up in your system. 
+Currently, no specific installation support is provided. In the future, it will be distributed 
+through PyPI. To use it download the repo and install the `requirements.txt`. You need
+to have a Python environment set up in your system. 
 
 ## User Guide
 ----------
@@ -17,7 +17,7 @@ to have a python environment set up in your system.
 ```console
     $ pip install requirements.txt
 ```
-You are recomented to use a virtual environment.
-3. On Linux run the `run.py` with python on the terminal. Same could be done with Windows or simply double click on the run.py.
-4. Open the localhost:5000 on your browser or, open the link provided on the terminal. (Which usualy
+You are recommended to use a virtual environment.
+3. On Linux run the `run.py` with Python on the terminal. The same could be done with Windows or simply double-click on the run.py.
+4. Open the localhost:5000 on your browser or, open the link provided on the terminal. (Which usually
 looks like: `your_ip`:`5000`)
