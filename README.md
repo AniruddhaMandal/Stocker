@@ -1,4 +1,7 @@
 # Stocker
+
+Aniruddha Mandal
+# Stocker
 ----------
 This is Python-flask based web application. Stocker collects and processes the data for you.
 It plots the graph and of stock and help to compare visually. Stocker is completly cross platform,
