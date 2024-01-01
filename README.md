@@ -1,19 +1,16 @@
 # Stocker
-
-Aniruddha Mandal
-# Stocker
 ----------
 This is Python-flask based web application. Stocker collects and processes the data for you.
 It plots the graph and of stock and help to compare visually. Stocker is completly cross platform,
 so use it on any OS of your choice.
 
-# Installation
+## Installation
 ----------
 Currently no specific installation support is provided. In the future it would be distributed 
 through PyPI. To use it download the repo and install the `requirements.txt`. For this you need
 to have a python environment set up in your system. 
 
-# User Guide
+## User Guide
 ----------
 1. Download this repo on your machine.
 2. Install Python (if you haven't done it already), install the `requirements.txt` through pip with the command: 
