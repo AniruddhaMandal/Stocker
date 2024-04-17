@@ -36,7 +36,7 @@ class Stock:
         self.dates = None
         self.value = None
 
-    def download(self,close="adjusted",range="1y",interval="1h",period1=None,period2=None):
+    def download(self,close="adjusted",range="1y",interval="1h",period1=None,period2=None,industry=False):
         """
             Downloads the data from Yahoo finance. Saves the data  to the 
             `Data/RawData` directory. 
@@ -277,7 +277,7 @@ class Stock:
         out_data = [self._day_avg(row) for row in dataset]
         return out_data
 
-    def _exp_moving_avg(self, array: np.array, period: int):
+    def _exp_moving_avg(self, array: np.ndarray, period: int):
         smoothing_factor = 2/(period+1)
         ema_array = np.zeros(len(array)-period+1,dtype=np.float64)
         current_ema = array[:period].sum()/period
